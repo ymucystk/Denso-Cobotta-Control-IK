@@ -257,6 +257,7 @@ export default function Home() {
     let result_rotate = {j1_rotate,j2_rotate,j3_rotate,j4_rotate,j5_rotate,j6_rotate,dsp_message}
     let save_distance = undefined
     let save_distance_cnt = 0
+    let save_rotate = {...result_rotate}
 
     for(let i=0; i<10; i=i+1){
       set_test_pos({...shift_target})
@@ -295,6 +296,7 @@ export default function Home() {
           save_distance_cnt = save_distance_cnt + 1
           if(save_distance_cnt > 1){
             if(round(sabun_distance,4) <= 0){
+              result_rotate = {...save_rotate}
               console.log("姿勢制御困難！")
               break  
             }
@@ -306,6 +308,7 @@ export default function Home() {
           }
         }
         save_distance = sabun_distance
+        save_rotate = {...result_rotate}
       }
       shift_target.x = shift_target.x + sabun_pos.x
       shift_target.y = shift_target.y + sabun_pos.y
@@ -632,8 +635,11 @@ export default function Home() {
           <Cursor3dp j_id="21" pos={{x:0,y:0,z:p15_16_len}} visible={cursor_vis}></Cursor3dp>
           <Cursor3dp j_id="22" pos={{x:0,y:-joint_pos.j5.y,z:0}} rot={{x:0,y:j1_rotate,z:0}} visible={cursor_vis}></Cursor3dp>
         </Cursor3dp>
-        <a-entity light="type: directional; color: #EEE; intensity: 0.7" position="1 1 1"></a-entity>
-        <a-entity light="type: directional; color: #EEE; intensity: 0.7" position="-1 1 1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.25" position="1 1 1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.25" position="-1 1 1"></a-entity>
+        <a-entity light="type: directional; color: #EEE; intensity: 0.25" position="-1 1 -1"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.25" position="1 1 -1"></a-entity>
+        <a-entity light="type: directional; color: #EFE; intensity: 0.05" position="0 -1 0"></a-entity>
         <a-entity id="rig" position={`${c_pos_x} ${c_pos_y} ${c_pos_z}`} rotation={`${c_deg_x} ${c_deg_y} ${c_deg_z}`}>
           <a-camera id="camera" cursor="rayOrigin: mouse;" position="0 0 0"></a-camera>
         </a-entity>
